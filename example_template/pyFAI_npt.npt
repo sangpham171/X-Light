@@ -1,0 +1,40 @@
+# set of control point used by pyFAI to calibrate the geometry of a scattering experiment
+#angles are in radians, wavelength in meter and positions in pixels
+calibrant: Si_SRM640 Calibrant with 15 reflections at wavelength 6.888010966467066e-11
+wavelength: 6.888010966467066e-11
+dspacing:3.13552003 1.92010604 1.63747193 1.35772 1.24592932 1.10857374 1.04517334 0.96005302 0.91798627 0.85869752 0.82820144 0.78388001 0.76047531 0.72573187 0.70704035
+
+New group of points: 0
+2theta: 0.6317955552087651
+ring: 4
+point: x=240.0 y=274
+point: x=220.0 y=274
+point: x=200.0 y=274
+point: x=180.0 y=274
+point: x=160.0 y=274
+point: x=140.0 y=274
+point: x=120.0 y=274
+point: x=100.0 y=274
+point: x=80.0 y=274
+point: x=60.0 y=274
+point: x=40.0 y=274
+point: x=20.0 y=274
+point: x=0.0 y=274
+
+
+New group of points: 2
+2theta: 0.5129262539888163
+ring: 3
+point: x=240.0 y=-2
+point: x=220.0 y=-2
+point: x=200.0 y=-2
+point: x=180.0 y=-2
+point: x=160.0 y=-2
+point: x=140.0 y=-2
+point: x=120.0 y=-2
+point: x=100.0 y=-2
+point: x=80.0 y=-2
+point: x=60.0 y=-2
+point: x=40.0 y=-2
+point: x=20.0 y=-2
+point: x=0.0 y=-2

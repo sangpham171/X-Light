@@ -1,0 +1,36 @@
+Material properties
+Unstressed peak =78.225
+s1=-5.11E-6
+s2/2=19.54E-6
+Young=69000
+Poisson=0.35
+
+X-ray properties
+kalpha 1=1.5407257839656279
+kalpha 2=0
+kalpha ratio=0
+
+Fitting range
+twotheta from=75
+twotheta to=79.3
+gamma from=-0.81
+gamma to=0.81
+gamma number step=1
+function fit=1
+peak_shape=1
+
+Background range
+range 1 from=75
+range 1 to=76
+range 2 from=79
+range 2 to=79.3
+
+background polynomial fit degrees=1
+correlation ratio=0.95
+init guess=1
+
+Peaks list
+Peak0=77.9
+Limit peak0=0.5
+FWHM0=
+

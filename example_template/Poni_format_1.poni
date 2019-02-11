@@ -1,0 +1,11 @@
+# Nota: C-Order, 1 refers to the Y axis, 2 to the X axis 
+# Calibration done at Thu Nov  9 11:08:51 2017
+PixelSize1: 6.8e-05
+PixelSize2: 6.8e-05
+Distance: 0.222991836505
+Poni1: 0.0700776693097
+Poni2: 0.0682059149989
+Rot1: 3.11548156749
+Rot2: -1.18895400806
+Rot3: -6.05567295166e-06
+Wavelength: 1.78897e-10
