@@ -89,7 +89,6 @@ _default_codecs = [
     ("jpeg2kimage", "Jpeg2KImage"),
     ("mpaimage", "MpaImage"),
     ("mrcimage", "MrcImage"),
-    ("nexusimage", "NexusImage"),
     ("xlightimage", "XlightImage"),
 ]
 """List of relative module and class names for available formats in fabio.
