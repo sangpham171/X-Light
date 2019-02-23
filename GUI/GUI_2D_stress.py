@@ -113,7 +113,7 @@ def GUI_2D_stress(self):
     self.Frame3_[3].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[3],orient=HORIZONTAL,width=screen_width,height=screen_height)
     self.Frame3_3_1= Frame(self.Frame3_[3],width=screen_width*0.05,height=screen_height)
-    self.Frame3_3_2= Frame(self.Frame3_[3],width=screen_width*0.2,height=screen_height)
+    self.Frame3_3_2= Frame(self.Frame3_[3],width=screen_width*0.2,height=screen_height, borderwidth=2, relief=GROOVE)
     self.Frame3_3_3= Frame(self.Frame3_[3],width=screen_width*0.5,height=screen_height)
     paned.add(self.Frame3_3_1,stretch="never")
     paned.add(self.Frame3_3_2,stretch="never")
