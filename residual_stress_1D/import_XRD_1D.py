@@ -38,8 +38,8 @@ class import_XRD:
         except Exception as e:
             showinfo(title="Warning",message=str(e)+"\n"+"\n"+str(traceback.format_exc()))
             return
-        else:
-            angles_modif.def_button(angles_modif,self,main)
+        #else:
+            #angles_modif.def_button(angles_modif,self,main)
             
         main.root.mainloop()
 

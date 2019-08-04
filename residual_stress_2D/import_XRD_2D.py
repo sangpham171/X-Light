@@ -52,7 +52,7 @@ class import_XRD:
             if len(self.phi)>0:
                 self.progress["value"] = self.progress["value"]+1
                 self.progress.update()
-                self.destroy_widget(main)  #reset all frame in list (see in fonction)
+                self.destroy_widget(main)  #reset all frame (see frame list in fonction)
                 self.graphic_frame3_1(main) #graphical representation
 
                 self.progress["value"] = self.progress["value"]+1
@@ -201,14 +201,16 @@ class import_XRD:
         Label(main.Frame3_1_3_2, text="to").grid(row=3,column=0)
         self.legend_to_entry = Entry(main.Frame3_1_3_2,width=6)
         self.legend_to_entry.grid(row=4,column=0)
-        
+
+        #Images color
         self.cmap_var=StringVar()
         Radiobutton(main.Frame3_1_3_2, text="hot", variable=self.cmap_var, value="hot").grid(row=5,column=0,sticky=W)
         Radiobutton(main.Frame3_1_3_2, text="cool", variable=self.cmap_var, value="GnBu").grid(row=6,column=0,sticky=W)
         Radiobutton(main.Frame3_1_3_2, text="gray", variable=self.cmap_var, value="gray").grid(row=7,column=0,sticky=W)
         Radiobutton(main.Frame3_1_3_2, text="nipy", variable=self.cmap_var, value="nipy_spectral").grid(row=8,column=0,sticky=W)
         self.cmap_var.set("hot")
-            
+
+        #images list
         scrollbar = Scrollbar(main.Frame3_1_1)
         scrollbar.pack(side = RIGHT, fill=Y) 
         mylist= Listbox(main.Frame3_1_1, yscrollcommand = scrollbar.set)
@@ -216,14 +218,14 @@ class import_XRD:
         for i in range(len(self.phi)):
             mylist.insert(END, str(i+1)+u'. \u03C6='+str(self.phi[i])+" ; "+u'\u03C7='+str(self.chi[i])+u"; \u03C9="+str(float(self.omega[i]))+
                           ' (.'+str(self.nfile[i]+1)+'.'+str(self.nimage_i[i]+1)+'.)')
-        self.rotate=0
-        self.flip=0
+        self.rotate=0 #init ratation value
+        self.flip=0 #init flip value
         mylist.bind("<ButtonRelease-1>", lambda event: show_original_image(event,self,main))
         scrollbar.config(command = mylist.yview)
+        
         #----------------affiche the first image valide---------------------------------------
-
-        data=read_data_2D_1(0,self,main)
-        data_dim=len(data.shape)
+        data=read_data_2D_1(0,self,main) #read image data
+        data_dim=len(data.shape) #image dimension
                     
         if data_dim==2:                 
             self.intensity_2D=data
@@ -234,7 +236,8 @@ class import_XRD:
 
         self.legend_from_entry.insert(0,0)
         self.legend_to_entry.insert(0,max(map(max, self.intensity_2D)))
-        
+
+        #plot image on frame
         fig=plt.figure(1,facecolor="0.94")
         plt.imshow(self.intensity_2D,cmap="hot",origin='lower')
         plt.title(u'\u03C6='+str(float(self.phi[0]))+" ; "+u'\u03C7='+str(float(self.chi[0]))+u"; \u03C9="+str(float(self.omega[0])))

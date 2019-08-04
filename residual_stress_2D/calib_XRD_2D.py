@@ -33,6 +33,7 @@ from visualisation.pack_Frame import pack_Frame_2D
 
 def calib_pyFai(self,intensity_2D,nrow,ncol,center_row,center_col,twotheta_center):  
     try:
+        #read PONI parameters
         calib=AzimuthalIntegrator()
         calib.pixel1=float(self.Entry_pixel_1.get())
         calib.pixel2=float(self.Entry_pixel_2.get())
@@ -49,24 +50,24 @@ def calib_pyFai(self,intensity_2D,nrow,ncol,center_row,center_col,twotheta_cente
         return
     else:
         if theta_direction==1:
-            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , ncol, nrow, unit="2th_deg")
+            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , ncol, nrow, unit="2th_deg") #pyFAI calib
             
-            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_row)]
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_row)] #gamma direction
             if gamma_y[0]>gamma_y[len(gamma_y)-1]:
                 gamma_y=np.flip(gamma_y,axis=0)
             if np.isnan(twotheta_center)==False:
-                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_col)]
+                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_col)] #2theta direction
             else:
                 twotheta_x=np.asarray(twotheta_x)
 
         else:
-            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , nrow, ncol, unit="2th_deg")
+            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , nrow, ncol, unit="2th_deg") #pyFAI calib
             
-            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_col)]
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_col)] #gamma direction
             if gamma_y[0]>gamma_y[len(gamma_y)-1]:
                 gamma_y=np.flip(gamma_y,axis=0)
             if np.isnan(twotheta_center)==False:
-                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)]
+                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)] #2theta direction
             else:
                 twotheta_x=np.asarray(twotheta_x)
 
@@ -104,35 +105,37 @@ class calib_2D:
             progress_indice=progress_indice+1
             progress["value"] = progress_indice
             progress.update()
-            self.destroy_widget(main)
-            self.graphic_frame3_2(import_XRD,angles_modif,main_calcul,main)
+            self.destroy_widget(main) #reset all Frame (see list in function)
+            self.graphic_frame3_2(import_XRD,angles_modif,main_calcul,main) #Frame Calib XRD graphic
             #--------------------
             progress_indice=progress_indice+1
             progress["value"] = progress_indice
             progress.update()
-            self.attribute_graphic_Frame3_3(import_XRD,angles_modif,main_calcul,main)
+            self.attribute_graphic_Frame3_3(import_XRD,angles_modif,main_calcul,main) #Frame Angles modif graphic
             #---------------------
             progress_indice=progress_indice+1
             progress["value"] = progress_indice
             progress.update()
-            self.attribute_graphic_Frame3_4(import_XRD,angles_modif,main_calcul,main)
+            self.attribute_graphic_Frame3_4(import_XRD,angles_modif,main_calcul,main) #Frame STRESS PARAMETERS graphic
             #---------------------
             progress_indice=progress_indice+1
             progress["value"] = progress_indice
             progress.update()
-            self.graphic_Frame3_5(import_XRD,angles_modif,main_calcul,main)
+            self.graphic_Frame3_5(import_XRD,angles_modif,main_calcul,main) #Frame FIT RESULTS graphic
 
         self.nimage=0
 
         for widget in main.Frame1_2.winfo_children():
             widget.destroy()
 
-    def run_calib(self,import_XRD):
+    def run_calib(self,import_XRD): #run calib fonction
+        #take phi, chi, omega, twotheta value in calib class
         self.phi=import_XRD.phi*1
         self.chi=import_XRD.chi*1
         self.omega=import_XRD.omega*1
         self.twotheta_center=import_XRD.twotheta_center*1
-            
+
+        #check image rotation and flip
         twotheta_center=import_XRD.twotheta_center[0]
         rotate=import_XRD.rotate
         flip=import_XRD.flip
@@ -171,14 +174,14 @@ class calib_2D:
         if flip==2:
             intensity_2D=np.flip(intensity_2D,axis=1)
             
-        self.calib=calib_pyFai(import_XRD,intensity_2D,nrow,ncol,center_row,center_col,twotheta_center)
-        if len(self.calib)>0:
-            self.intensity_2D_calib=self.calib[0]
-            self.twotheta_x=self.calib[1]
-            self.gamma_y=self.calib[2]
-            self.nrow=len(self.gamma_y)
-            self.ncol=len(self.twotheta_x)
-            if np.isnan(self.twotheta_center[0])==True:
+        self.calib=calib_pyFai(import_XRD,intensity_2D,nrow,ncol,center_row,center_col,twotheta_center) #run calib pyFAI
+        if len(self.calib)>0: #calib pyFAI valide => take results
+            self.intensity_2D_calib=self.calib[0] #image data after pyFAI calib
+            self.twotheta_x=self.calib[1] #2theta values
+            self.gamma_y=self.calib[2] #gamma values
+            self.nrow=len(self.gamma_y) #gamma points
+            self.ncol=len(self.twotheta_x) #2theta points
+            if np.isnan(self.twotheta_center[0])==True: #check if two theta center existe
                 for i in range(len(self.twotheta_center)):
                     self.twotheta_center[i]=self.twotheta_x[int(len(self.twotheta_x)/2)]
                 
@@ -249,7 +252,8 @@ class calib_2D:
             widget.destroy()
 
         
-    def graphic_frame3_2(self,import_XRD,angles_modif,main_calcul,main):      
+    def graphic_frame3_2(self,import_XRD,angles_modif,main_calcul,main): #Frame Calib XRD
+        #image legend setting
         Label(main.Frame3_2_4, text="Image legend",bg="white").grid(row=0,column=0)
         Label(main.Frame3_2_4, text="from").grid(row=1,column=0)
         self.Entry_legend_from_3_2 = Entry(main.Frame3_2_4,width=6)
@@ -261,13 +265,15 @@ class calib_2D:
         self.Entry_legend_to_3_2.grid(row=4,column=0)
         self.Entry_legend_to_3_2.insert(0,max(map(max, self.intensity_2D_calib)))
 
+        #color setting
         self.cmap_var_3_2=StringVar()
         Radiobutton(main.Frame3_2_4, text="hot", variable=self.cmap_var_3_2, value="hot").grid(row=5,column=0,sticky=W)
         Radiobutton(main.Frame3_2_4, text="cool", variable=self.cmap_var_3_2, value="GnBu").grid(row=6,column=0,sticky=W)
         Radiobutton(main.Frame3_2_4, text="gray", variable=self.cmap_var_3_2, value="gray").grid(row=7,column=0,sticky=W)
         Radiobutton(main.Frame3_2_4, text="nipy", variable=self.cmap_var_3_2, value="nipy_spectral").grid(row=8,column=0,sticky=W)
         self.cmap_var_3_2.set("hot")
-               
+
+        #images list
         scrollbar = Scrollbar(main.Frame3_2_2)
         scrollbar.pack(side = RIGHT, fill=Y) 
         mylist= Listbox(main.Frame3_2_2, yscrollcommand = scrollbar.set)
@@ -293,7 +299,7 @@ class calib_2D:
         canvas = FigureCanvasTkAgg(fig, main.Frame3_2_3)
         canvas.get_tk_widget().pack(fill=BOTH,expand=YES,ipadx=20)
 
-    def graphic_Frame3_3(self,import_XRD,angles_modif,main_calcul,main):
+    def graphic_Frame3_3(self,import_XRD,angles_modif,main_calcul,main): #Frame ANGLES MODIFICATION
         Label(main.Frame3_3_2_1, text="ANGLES MODIFICATION (optinal)", bg="white").grid(row=0,column=0,sticky=W)
         Label(main.Frame3_3_2_1, text=u"PHI \u03C6").grid(row=1,column=0,sticky=W)
         Label(main.Frame3_3_2_1, text="offset (°)").grid(row=1,column=1,sticky=W)
@@ -353,9 +359,10 @@ class calib_2D:
             
         self.angles_modif_valid=False
 
+        #reset all button in Frame
         self.button_apply=Button(main.Frame3_3_2_1,compound=CENTER, text="Apply",bg="white",command=lambda:None)
         self.button_apply.grid(row=7, column=0,sticky=W)
-        self.button_init=Button(main.Frame3_3_2_1,compound=CENTER, text="Initialize",bg="white",command=lambda:None)
+        self.button_init=Button(main.Frame3_3_2_1,compound=CENTER, text="Initialize",bg="white",command=lambda:None) 
         self.button_init.grid(row=8, column=0,sticky=W)
         self.button_advance=Button(main.Frame3_3_2_1,compound=CENTER, text="Advance",bg="white",command=lambda:None)
         self.button_advance.grid(row=9,column=0,sticky=W)
@@ -376,6 +383,7 @@ class calib_2D:
             
         #self.angles_modif_valid=False
 
+        #attribute function to buttons
         self.button_apply.config(command=lambda:angles_modif.apply(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
         self.button_init.config(command=lambda:angles_modif.init(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
         self.button_advance.config(command=lambda:angles_modif.advance(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
@@ -392,8 +400,18 @@ class calib_2D:
         canvas = FigureCanvasTkAgg(fig, main.Frame3_3_3)
         canvas.get_tk_widget().pack(fill=BOTH,expand=YES,ipadx=50)
 
+        try:
+            angles_modif.Button_import_gma.config(command=lambda:angles_modif.import_goniometric_angles(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
+            angles_modif.Button_next.config(command=lambda:angles_modif.next_step(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
+            if angles_modif.gonio_config.get()==1:
+                angles_modif.Button_apply_gma.config(command=lambda:angles_modif.apply_advance_1(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
+            elif angles_modif.gonio_config.get()==2:
+                angles_modif.Button_apply_gma.config(command=lambda:angles_modif.apply_advance_2(angles_modif,self,import_XRD,main_calcul,stress_calcul,main))
+        except Exception:
+            pass
         
-    def graphic_Frame3_4(self,import_XRD,angles_modif,main_calcul,main):   
+        
+    def graphic_Frame3_4(self,import_XRD,angles_modif,main_calcul,main):   #"STRESS PARAMETERS" frame
         f=font.Font(size=9,underline=1)
         
         i=0

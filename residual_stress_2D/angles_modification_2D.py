@@ -20,10 +20,11 @@ import numpy as np
 
 class angles_modif:
     def __init__(self,main):
-        Frame_a=Frame(main.Frame3_3_2_2)
-        self.Button_import_gma=Button(Frame_a)
-        self.Button_next=Button(Frame_a)
-        self.Button_apply_gma=Button(Frame_a)
+        main.Frame3_3_2_2_1=Frame(main.Frame3_3_2_2)
+        main.Frame3_3_2_2_2=Frame(main.Frame3_3_2_2)
+        self.Button_import_gma=Button(main.Frame3_3_2_2_1)
+        self.Button_next=Button(main.Frame3_3_2_2_1)
+        self.Button_apply_gma=Button(main.Frame3_3_2_2_2)
         
     def init(self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
         calib_2D.angles_modif_valid=False
@@ -188,116 +189,117 @@ class angles_modif:
     def advance(self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
         for widget in main.Frame3_3_2_2.winfo_children():
             widget.destroy()
-        Frame_a=Frame(main.Frame3_3_2_2)
-        Frame_a.pack(side = TOP)
-        Frame_b=Frame(main.Frame3_3_2_2)
-        Frame_b.pack(side = TOP)
+        main.Frame3_3_2_2_1=Frame(main.Frame3_3_2_2)
+        main.Frame3_3_2_2_1.pack(side = TOP)
+        main.Frame3_3_2_2_2=Frame(main.Frame3_3_2_2)
+        main.Frame3_3_2_2_2.pack(side = TOP)
         
         f=font.Font(size=9,underline=1)
-        self.Button_import_gma=Button(Frame_a,compound=CENTER, text="Import",bg="white",command=lambda:self.import_goniometric_angles(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
+        self.Button_import_gma=Button(main.Frame3_3_2_2_1,compound=CENTER, text="Import",bg="white",command=lambda:self.import_goniometric_angles(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
         self.Button_import_gma.grid(row=0,column=0,sticky=W)
-        Button(Frame_a,compound=CENTER, text="Hide",bg="white",command=lambda:self.hide(self,main)).grid(row=0,column=1,sticky=W)
+        Button(main.Frame3_3_2_2_1,compound=CENTER, text="Hide",bg="white",command=lambda:self.hide(self,main)).grid(row=0,column=1,sticky=W)
         
-        Label(Frame_a, text="GONIMETER CONFIGURATION",font=f).grid(row=1,column=0,sticky=W)
+        Label(main.Frame3_3_2_2_1, text="GONIMETER CONFIGURATION",font=f).grid(row=1,column=0,sticky=W)
         self.gonio_config = IntVar()
-        Radiobutton(Frame_a, text=u"CHI \u03C7", variable=self.gonio_config, value=1).grid(row=1,column=1,sticky=W)
-        Radiobutton(Frame_a, text=u"OMEGA \u03C9", variable=self.gonio_config, value=2).grid(row=2,column=1,sticky=W)
+        Radiobutton(main.Frame3_3_2_2_1, text=u"CHI \u03C7", variable=self.gonio_config, value=1).grid(row=1,column=1,sticky=W)
+        Radiobutton(main.Frame3_3_2_2_1, text=u"OMEGA \u03C9", variable=self.gonio_config, value=2).grid(row=2,column=1,sticky=W)
         self.gonio_config.set(1)
 
-        self.Button_next=Button(Frame_a,compound=CENTER, text="Next",bg="white",command=lambda:self.next_step(Frame_b,self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
+        self.Button_next=Button(main.Frame3_3_2_2_1,compound=CENTER, text="Next",bg="white",command=lambda:self.next_step(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
         self.Button_next.grid(row=3,column=0,sticky=W)
 
-        self.Button_apply_gma=Button(Frame_b,compound=CENTER, text="apply",bg="white")
+        self.Button_apply_gma=Button(main.Frame3_3_2_2_2,compound=CENTER, text="apply",bg="white")
         
         main.root.mainloop()
+        
 
-    def next_step(Frame_b,self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
-        for widget in Frame_b.winfo_children():
+    def next_step(self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
+        for widget in main.Frame3_3_2_2_2.winfo_children():
             widget.destroy()
             
         f=font.Font(size=9,underline=1)
         if self.gonio_config.get()==1:
-            Label(Frame_b, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
+            Label(main.Frame3_3_2_2_2, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
             self.scan_mode = IntVar()
-            Radiobutton(Frame_b, text=u"Chi \u03C7", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
-            Radiobutton(Frame_b, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
+            Radiobutton(main.Frame3_3_2_2_2, text=u"Chi \u03C7", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
+            Radiobutton(main.Frame3_3_2_2_2, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
             self.scan_mode.set(1)
 
-            Label(Frame_b, text="2\u03B8 center").grid(row=2,column=0,sticky=W)
-            self.Entry_2theta_center= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text="2\u03B8 center").grid(row=2,column=0,sticky=W)
+            self.Entry_2theta_center= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_2theta_center.grid(row=2, column=1,sticky=W)
 
-            Label(Frame_b, text="\u03C9 center").grid(row=3,column=0,sticky=W)
-            self.Entry_omega_center= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text="\u03C9 center").grid(row=3,column=0,sticky=W)
+            self.Entry_omega_center= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_omega_center.grid(row=3, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
-            self.Entry_phi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
+            self.Entry_phi_start= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_start.grid(row=4, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
-            self.Entry_phi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
+            self.Entry_phi_end= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_end.grid(row=4, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
-            self.Entry_phi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
+            self.Entry_phi_number= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_number.grid(row=5, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C7 start").grid(row=6,column=0,sticky=W)
-            self.Entry_chi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C7 start").grid(row=6,column=0,sticky=W)
+            self.Entry_chi_start= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_chi_start.grid(row=6, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C7 end").grid(row=6,column=2,sticky=W)
-            self.Entry_chi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C7 end").grid(row=6,column=2,sticky=W)
+            self.Entry_chi_end= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_chi_end.grid(row=6, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C7").grid(row=7,column=0,sticky=W)
-            self.Entry_chi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"Number \u03C7").grid(row=7,column=0,sticky=W)
+            self.Entry_chi_number= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_chi_number.grid(row=7, column=1,sticky=W)
 
-            self.Button_apply_gma=Button(Frame_b,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_1(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
+            self.Button_apply_gma=Button(main.Frame3_3_2_2_2,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_1(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
             self.Button_apply_gma.grid(row=8,column=1,sticky=W)
 
         elif self.gonio_config.get()==2:
-            Label(Frame_b, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
+            Label(main.Frame3_3_2_2_2, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
             self.scan_mode = IntVar()
-            Radiobutton(Frame_b, text=u"Omega \u03C9", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
-            Radiobutton(Frame_b, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
+            Radiobutton(main.Frame3_3_2_2_2, text=u"Omega \u03C9", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
+            Radiobutton(main.Frame3_3_2_2_2, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
             self.scan_mode.set(1)
 
-            Label(Frame_b, text="2\u03B8 center").grid(row=2,column=0,sticky=W)
-            self.Entry_2theta_center= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text="2\u03B8 center").grid(row=2,column=0,sticky=W)
+            self.Entry_2theta_center= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_2theta_center.grid(row=2, column=1,sticky=W)
 
-            Label(Frame_b, text="\u03C7").grid(row=3,column=0,sticky=W)
-            self.Entry_chi= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text="\u03C7").grid(row=3,column=0,sticky=W)
+            self.Entry_chi= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_chi.grid(row=3, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
-            self.Entry_phi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
+            self.Entry_phi_start= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_start.grid(row=4, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
-            self.Entry_phi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
+            self.Entry_phi_end= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_end.grid(row=4, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
-            self.Entry_phi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
+            self.Entry_phi_number= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_phi_number.grid(row=5, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C9 start").grid(row=6,column=0,sticky=W)
-            self.Entry_omega_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C9 start").grid(row=6,column=0,sticky=W)
+            self.Entry_omega_start= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_omega_start.grid(row=6, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C9 end").grid(row=6,column=2,sticky=W)
-            self.Entry_omega_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"\u03C9 end").grid(row=6,column=2,sticky=W)
+            self.Entry_omega_end= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_omega_end.grid(row=6, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C9").grid(row=7,column=0,sticky=W)
-            self.Entry_omega_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_3_2_2_2, text=u"Number \u03C9").grid(row=7,column=0,sticky=W)
+            self.Entry_omega_number= Entry(main.Frame3_3_2_2_2,width=10)
             self.Entry_omega_number.grid(row=7, column=1,sticky=W)
             
-            self.Button_apply_gma=Button(Frame_b,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_2(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
+            self.Button_apply_gma=Button(main.Frame3_3_2_2_2,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_2(self,calib_2D,import_XRD,main_calcul,stress_calcul,main))
             self.Button_apply_gma.grid(row=8,column=1,sticky=W)
         
         main.root.mainloop()
@@ -306,10 +308,11 @@ class angles_modif:
         for widget in main.Frame3_3_2_2.winfo_children():
             widget.destroy()
             
-        Frame_a=Frame(main.Frame3_3_2_2)
-        self.Button_import_gma=Button(Frame_a)
-        self.Button_next=Button(Frame_a)
-        self.Button_apply_gma=Button(Frame_a)
+        main.Frame3_3_2_2_1=Frame(main.Frame3_3_2_2)
+        main.Frame3_3_2_2_2=Frame(main.Frame3_3_2_2)
+        self.Button_import_gma=Button(main.Frame3_3_2_2_1)
+        self.Button_next=Button(main.Frame3_3_2_2_1)
+        self.Button_apply_gma=Button(main.Frame3_3_2_2_2)
         
         main.root.mainloop()
 

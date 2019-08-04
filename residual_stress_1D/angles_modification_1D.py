@@ -18,7 +18,13 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 
-class angles_modif:                                       
+class angles_modif:
+    def __init__(self,main):
+        Frame_a=Frame(main.Frame3_3_2_2)
+        self.Button_import_gma=Button(Frame_a)
+        self.Button_next=Button(Frame_a)
+        self.Button_apply_gma=Button(Frame_a)
+        
     def init(self,import_XRD,main):
         import_XRD.angles_modif_valid=False
 

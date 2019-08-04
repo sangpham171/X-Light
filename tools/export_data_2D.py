@@ -652,7 +652,7 @@ def export_all_stress_data(calib_2D,main_calcul,stress_calcul,main):
         f.write("---------------------------------------------------- \n")                
 
         f.write("phi(°)    psi(°)    omega(°)     gamma(°)   peak_2theta(°)    phi_gamma(°)     psi_gamma(°)\n")
-        for i in range(len(stress_calcul.phi_regroup)):
+        for i in range(len(main_calcul.phi)):
             progress["value"] = progress["value"]+1
             progress.update()
             for j in range(main_calcul.gamma_number):

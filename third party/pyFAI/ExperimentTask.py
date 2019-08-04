@@ -346,6 +346,7 @@ class ExperimentTask(AbstractCalibrationTask):
         builder.addImageFormat("NumPy binary files", "npy")
         builder.addImageFormat("CBF files", "cbf")
         builder.addImageFormat("MarCCD image files", "mccd")
+        builder.addImageFormat("Bruker image files", "gfrm")
         builder.addImageFormat("X-Light image files", "xlf")
         if forMask:
             builder.addImageFormat("Fit2D mask files", "msk")

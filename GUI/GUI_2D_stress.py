@@ -70,7 +70,8 @@ def GUI_2D_stress(self):
 
     self.Frame3_=[]
     self.Frame3_.append(None)
-                
+
+    #ORIGINAL XRD            
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[1].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[1],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -89,7 +90,8 @@ def GUI_2D_stress(self):
     self.Frame3_1_3_1.pack(side=TOP)
     self.Frame3_1_3_2= Frame(self.Frame3_1_3)
     self.Frame3_1_3_2.pack(side=BOTTOM)
-    
+
+    #CALIB XRD
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[2].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[2],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -109,6 +111,7 @@ def GUI_2D_stress(self):
     self.Frame3_2_1_2= Frame(self.Frame3_2_1)
     self.Frame3_2_1_2.pack(side=TOP)
 
+    #ANGLES MODIFICATION
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[3].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[3],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -125,7 +128,8 @@ def GUI_2D_stress(self):
     self.Frame3_3_2_1.pack(side=TOP)
     self.Frame3_3_2_2= Frame(self.Frame3_3_2)
     self.Frame3_3_2_2.pack(side=TOP)
-    
+
+    #STRESS PARAMETERS
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[4].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[4],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -156,6 +160,7 @@ def GUI_2D_stress(self):
     paned.pack(expand=YES, fill=BOTH)
     paned.pack_propagate(1)
 
+    #FIT RESULTS
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[5].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[5],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -186,7 +191,8 @@ def GUI_2D_stress(self):
     paned.add(self.Frame3_5_4_3,stretch="never")
     paned.pack(expand=YES,fill=BOTH)
     paned.pack_propagate(1)
-    
+
+    #STRESS RESULTS
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[6].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[6],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -215,7 +221,8 @@ def GUI_2D_stress(self):
     self.Frame3_6_3_2.pack(side=TOP)
     self.Frame3_6_3_3= Frame(self.Frame3_6_3)
     self.Frame3_6_3_3.pack(side=TOP)
-    
+
+    #STRESS TENSOR
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[7].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[7],orient=HORIZONTAL,width=screen_width,height=screen_height)
@@ -228,6 +235,7 @@ def GUI_2D_stress(self):
     paned.pack(expand=YES, fill=BOTH)
     paned.pack_propagate(1) 
 
+    #OTHER INFO
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[8].pack_propagate(1)
     paned=PanedWindow(self.Frame3_[8],orient=HORIZONTAL,width=screen_width,height=screen_height)

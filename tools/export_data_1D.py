@@ -223,13 +223,13 @@ def export_all_stress_data(main_calcul,stress_calcul,main):
         f.write("---------------------------------------------------- \n")                 
 
         f.write("phi(°)    chi(°)     omega(°)    peak_2theta(°)    phi(°)     psi(°)\n")
-        for i in range(len(stress_calcul.phi_regroup)):
+        for i in range(len(main_calcul.phi)):
             progress["value"] = progress["value"]+1
             progress.update()
             f.write(str("%3.4g" % main_calcul.phi[i]))
             f.write(str("%10.4g" % main_calcul.chi[i]))
             f.write(str("%10.4g" % main_calcul.omega[i]))
-            f.write(str("%10.4g" % stress_calcul.peaks_position[i]))
+            f.write(str("%15.4g" % stress_calcul.peaks_position[i]))
             f.write(str("%15.4g" % stress_calcul.phi_regroup[i]))
             f.write(str("%15.4g" % stress_calcul.psi_regroup[i]))
             f.write("\n")
