@@ -13,6 +13,8 @@
 from scipy.optimize import curve_fit
 from scipy.special import wofz
 import numpy as np
+import warnings
+from scipy.optimize import OptimizeWarning
 
 def Voigt_fit(intensity,two_theta,kalpha_1,kalpha_2,kalpha_ratio,p_0,peak_shape):
     if kalpha_2==0:

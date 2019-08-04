@@ -43,20 +43,34 @@ def calib_pyFai(self,intensity_2D,nrow,ncol,center_row,center_col,twotheta_cente
         calib.rot2 = float(self.Entry_rot_2.get())
         calib.rot3 = float(self.Entry_rot_3.get())
         calib.wavelength = float(self.Entry_wl_calib.get())
+        theta_direction=self.direction_2theta.get()
     except Exception as e:
         showinfo(title="Error",message="Wrong PONI parameters:"+str(e))
         return
-    else:   
-        intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , nrow, ncol, unit="2th_deg")
-        
-        gamma_y=np.asarray(gamma_y)-gamma_y[int(center_col)]
-        if gamma_y[0]>gamma_y[len(gamma_y)-1]:
-            gamma_y=np.flip(gamma_y,axis=0)
-        if np.isnan(twotheta_center)==False:
-            twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)]
-        else:
-            twotheta_x=np.asarray(twotheta_x)
+    else:
+        if theta_direction==1:
+            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , ncol, nrow, unit="2th_deg")
+            
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_row)]
+            if gamma_y[0]>gamma_y[len(gamma_y)-1]:
+                gamma_y=np.flip(gamma_y,axis=0)
+            if np.isnan(twotheta_center)==False:
+                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_col)]
+            else:
+                twotheta_x=np.asarray(twotheta_x)
 
+        else:
+            intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , nrow, ncol, unit="2th_deg")
+            
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_col)]
+            if gamma_y[0]>gamma_y[len(gamma_y)-1]:
+                gamma_y=np.flip(gamma_y,axis=0)
+            if np.isnan(twotheta_center)==False:
+                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)]
+            else:
+                twotheta_x=np.asarray(twotheta_x)
+
+            
         return(intensity_2D_calib,twotheta_x,gamma_y)
     
 #-------------------------------------

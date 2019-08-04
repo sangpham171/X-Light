@@ -26,7 +26,7 @@ class angles_modif:
         self.Button_apply_gma=Button(Frame_a)
         
     def init(self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
-        calib_2D.angles_modif_valid=True
+        calib_2D.angles_modif_valid=False
 
         calib_2D.Entry_phi_offset.delete(0,END)
         calib_2D.Entry_chi_offset.delete(0,END)
@@ -326,6 +326,7 @@ class angles_modif:
         except ValueError:
             showinfo(title="Error",message="Please verify all values are numbers\nPlease use '.' instead of ',' to insert a number")
         else:
+            calib_2D.angles_modif_valid=True
             if (phi_number-1)>=1:
                 phi_step=(phi_end-phi_start)/(phi_number-1)
             else:
@@ -432,6 +433,7 @@ class angles_modif:
         except ValueError:
             showinfo(title="Error",message="Please verify all values are numbers\nPlease use '.' instead of ',' to insert a number")
         else:
+            calib_2D.angles_modif_valid=True
             if (phi_number-1)>=1:
                 phi_step=(phi_end-phi_start)/(phi_number-1)
             else:
@@ -528,86 +530,91 @@ class angles_modif:
     def import_goniometric_angles(self,calib_2D,import_XRD,main_calcul,stress_calcul,main):
         f = askopenfilename(parent=main.root,title="Open file",filetypes=[('file type','*.gma;*.GMA'),('all files','.*')])
         if f is not None or f is not '':
-            f_open=open(f,"r")
-            line_text=f_open.readline() #Phi Chi Omega 2theta
-            
-            self.phi=[]
-            self.chi=[]
-            self.twotheta_center=[]
-            self.omega=[]
-            line_text=f_open.readline()
-            while line_text is not None and line_text is not '' and len(self.phi)<len(import_XRD.phi):
-                angles=line_text.split()
-                try:
-                    self.phi.append(float(angles[1]))
-                    self.chi.append(float(angles[2]))
-                    self.omega.append(float(angles[3]))
-                    self.twotheta_center.append(float(angles[4]))
-                except Exception:
-                    showinfo(title="Warning",message="Invalid format")
-                    return
-                line_text=f_open.readline()
-
-            if len(self.phi)<len(import_XRD.phi):
-                for i in range(len(import_XRD.phi)-len(self.phi)):
-                    self.phi.append(float('NaN'))
-                    self.chi.append(float('NaN'))
-                    self.omega.append(float('NaN'))
-                    self.twotheta_center.append(float('NaN'))
-
-            twotheta_shift=self.twotheta_center[0]-calib_2D.twotheta_center[0]
-            self.twotheta_x=[]
-            for i in range(len(calib_2D.twotheta_x)):
-                self.twotheta_x.append(calib_2D.twotheta_x[i]+twotheta_shift)
-
-            intensity_2D_calib=calib_2D.intensity_2D_calib
-
-            calib_2D.angles_modif_valid=True
- 
-            nrow=calib_2D.nrow
-            ncol=calib_2D.ncol
-
-            self.gamma_y=calib_2D.gamma_y
-
-            #Frame3_3
-            for widget in main.Frame3_3_1.winfo_children():
-                widget.destroy()
-            scrollbar = Scrollbar(main.Frame3_3_1)
-            scrollbar.pack( side = RIGHT, fill=Y) 
-            mylist= Listbox(main.Frame3_3_1, yscrollcommand = scrollbar.set,width=50)
-            for i in range(len(calib_2D.phi)):
-                mylist.insert(END, str(i+1)+u".\u03C6="+str(self.phi[i])+u"; \u03C7="+str(self.chi[i])+u"; \u03C9="+str(self.omega[i])+
-                              ' (.'+str(import_XRD.nfile[i]+1)+'.'+str(import_XRD.nimage_i[i]+1)+'.)')
-            mylist.pack( side = LEFT, fill = BOTH )
-            scrollbar.config( command = mylist.yview )
-
-            fig=plt.figure(1,facecolor="0.94")
-            cmap_var=calib_2D.cmap_var_3_2.get()
             try:
-                legend_from= float(calib_2D.Entry_legend_from_3_2.get())
-                legend_to= float(calib_2D.Entry_legend_to_3_2.get())
-            except ValueError:
-                plt.imshow(intensity_2D_calib, cmap=cmap_var,origin='lower')
-            else:
-                plt.imshow(intensity_2D_calib,clim=(legend_from, legend_to),cmap=cmap_var,origin='lower')
-     
-            plt.yticks((1,nrow*0.25,nrow*0.5,nrow*0.75,nrow), (str("%0.1f" %self.gamma_y[0]),str("%0.1f" %self.gamma_y[int(nrow*0.25)]),str("%0.1f" %self.gamma_y[int(nrow*0.5)]),str("%0.1f" %self.gamma_y[int(nrow*0.75)]),str("%0.1f" %self.gamma_y[int(nrow-1)])))
-            plt.xticks((1,ncol*0.25,ncol*0.5,ncol*0.75,ncol), (str("%0.1f" %self.twotheta_x[0]),str("%0.1f" %self.twotheta_x[int(ncol*0.25)]),str("%0.1f" %self.twotheta_x[int(ncol*0.5)]),str("%0.1f" %self.twotheta_x[int(ncol*0.75)]),str("%0.1f" %self.twotheta_x[int(ncol-1)])))
-            plt.xlabel(r"$2\theta(°)$")
-            plt.ylabel(r"$\gamma(°)$")
-            plt.colorbar( cax=plt.axes([0.9, 0.45, 0.02, 0.4]) )
-            plt.close()
-            
-            for widget in main.Frame3_3_3.winfo_children():
-                widget.destroy()  
-            canvas = FigureCanvasTkAgg(fig, main.Frame3_3_3)
-            canvas.get_tk_widget().pack(fill=BOTH,expand=YES)
+                f_open=open(f,"r")
+                line_text=f_open.readline() #Phi Chi Omega 2theta
+                
+                self.phi=[]
+                self.chi=[]
+                self.twotheta_center=[]
+                self.omega=[]
+                line_text=f_open.readline()
+                while line_text is not None and line_text is not '' and len(self.phi)<len(import_XRD.phi):
+                    angles=line_text.split()
+                    try:
+                        self.phi.append(float(angles[1]))
+                        self.chi.append(float(angles[2]))
+                        self.omega.append(float(angles[3]))
+                        self.twotheta_center.append(float(angles[4]))
+                    except Exception:
+                        showinfo(title="Warning",message="Invalid format")
+                        return
+                    line_text=f_open.readline()
 
-        #Frame3_4
-            for widget in main.Frame3_4_4_1_1.winfo_children():
-                widget.destroy()
-            canvas = FigureCanvasTkAgg(fig, main.Frame3_4_4_1_1)
-            canvas.get_tk_widget().pack(fill=BOTH,expand=YES)
+                if len(self.phi)<len(import_XRD.phi):
+                    for i in range(len(import_XRD.phi)-len(self.phi)):
+                        self.phi.append(float('NaN'))
+                        self.chi.append(float('NaN'))
+                        self.omega.append(float('NaN'))
+                        self.twotheta_center.append(float('NaN'))
+
+                twotheta_shift=self.twotheta_center[0]-calib_2D.twotheta_center[0]
+                self.twotheta_x=[]
+                for i in range(len(calib_2D.twotheta_x)):
+                    self.twotheta_x.append(calib_2D.twotheta_x[i]+twotheta_shift)
+
+                intensity_2D_calib=calib_2D.intensity_2D_calib
+
+                calib_2D.angles_modif_valid=True
+     
+                nrow=calib_2D.nrow
+                ncol=calib_2D.ncol
+
+                self.gamma_y=calib_2D.gamma_y
+
+                #Frame3_3
+                for widget in main.Frame3_3_1.winfo_children():
+                    widget.destroy()
+                scrollbar = Scrollbar(main.Frame3_3_1)
+                scrollbar.pack( side = RIGHT, fill=Y) 
+                mylist= Listbox(main.Frame3_3_1, yscrollcommand = scrollbar.set,width=50)
+                for i in range(len(calib_2D.phi)):
+                    mylist.insert(END, str(i+1)+u".\u03C6="+str(self.phi[i])+u"; \u03C7="+str(self.chi[i])+u"; \u03C9="+str(self.omega[i])+
+                                  ' (.'+str(import_XRD.nfile[i]+1)+'.'+str(import_XRD.nimage_i[i]+1)+'.)')
+                mylist.pack( side = LEFT, fill = BOTH )
+                scrollbar.config( command = mylist.yview )
+
+                fig=plt.figure(1,facecolor="0.94")
+                cmap_var=calib_2D.cmap_var_3_2.get()
+                try:
+                    legend_from= float(calib_2D.Entry_legend_from_3_2.get())
+                    legend_to= float(calib_2D.Entry_legend_to_3_2.get())
+                except ValueError:
+                    plt.imshow(intensity_2D_calib, cmap=cmap_var,origin='lower')
+                else:
+                    plt.imshow(intensity_2D_calib,clim=(legend_from, legend_to),cmap=cmap_var,origin='lower')
+         
+                plt.yticks((1,nrow*0.25,nrow*0.5,nrow*0.75,nrow), (str("%0.1f" %self.gamma_y[0]),str("%0.1f" %self.gamma_y[int(nrow*0.25)]),str("%0.1f" %self.gamma_y[int(nrow*0.5)]),str("%0.1f" %self.gamma_y[int(nrow*0.75)]),str("%0.1f" %self.gamma_y[int(nrow-1)])))
+                plt.xticks((1,ncol*0.25,ncol*0.5,ncol*0.75,ncol), (str("%0.1f" %self.twotheta_x[0]),str("%0.1f" %self.twotheta_x[int(ncol*0.25)]),str("%0.1f" %self.twotheta_x[int(ncol*0.5)]),str("%0.1f" %self.twotheta_x[int(ncol*0.75)]),str("%0.1f" %self.twotheta_x[int(ncol-1)])))
+                plt.xlabel(r"$2\theta(°)$")
+                plt.ylabel(r"$\gamma(°)$")
+                plt.colorbar( cax=plt.axes([0.9, 0.45, 0.02, 0.4]) )
+                plt.close()
+                
+                for widget in main.Frame3_3_3.winfo_children():
+                    widget.destroy()  
+                canvas = FigureCanvasTkAgg(fig, main.Frame3_3_3)
+                canvas.get_tk_widget().pack(fill=BOTH,expand=YES)
+
+            #Frame3_4
+                for widget in main.Frame3_4_4_1_1.winfo_children():
+                    widget.destroy()
+                canvas = FigureCanvasTkAgg(fig, main.Frame3_4_4_1_1)
+                canvas.get_tk_widget().pack(fill=BOTH,expand=YES)
+            except Exception:
+                showinfo(title="Error",message="Uncorrected file format")
+            else:
+                calib_2D.angles_modif_valid=True
 
         main.root.mainloop()
                 

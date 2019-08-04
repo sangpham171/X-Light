@@ -19,6 +19,7 @@ class import_material:
             path = sys._MEIPASS
         elif __file__:
             path = os.path.dirname(__file__)
+            
         filename = 'mat_database.mdb'
         filepath=os.path.join(path, filename)
         try:

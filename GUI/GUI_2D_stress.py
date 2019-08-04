@@ -24,7 +24,7 @@ def GUI_2D_stress(self):
     
     for widget in self.root.winfo_children():
         widget.destroy()
-
+    #Frame0,1,2,3 in vertical direction
     self.Frame0 = Frame(self.root, borderwidth=0, relief=GROOVE,width=screen_width,height=screen_height*0.1)
     self.Frame0.pack(fill=X,expand=YES,side=TOP)
     self.Frame0.pack_propagate(1)
@@ -41,11 +41,11 @@ def GUI_2D_stress(self):
     self.Frame1_2.pack(side=RIGHT)
     self.Frame1_2.pack_propagate(1)
 
-    self.Frame2 = Frame(self.root, borderwidth=2, relief=GROOVE,width=screen_width,height=screen_height*0.1)
+    self.Frame2 = Frame(self.root, borderwidth=2, relief=GROOVE,width=screen_width,height=screen_height*0.1) #tittle graphical representation
     self.Frame2.pack(fill=X,expand=YES,side=TOP)
     self.Frame2.pack_propagate(1)
 
-    self.Frame3 = Frame(self.root, borderwidth=0, relief=GROOVE,width=screen_width,height=screen_height)
+    self.Frame3 = Frame(self.root, borderwidth=0, relief=GROOVE,width=screen_width,height=screen_height) #graphical representation, Frame3_1,2.. in horizontal direction
     self.Frame3.pack(fill=X,expand=YES,side=TOP)
     self.Frame3.pack_propagate(1)
     
@@ -59,10 +59,10 @@ def GUI_2D_stress(self):
     self.menubar.add_command(label="About", command=lambda:about(self))
     self.root.config(menu=self.menubar)
     
-    Button(self.Frame1_1, compound=CENTER, text="Import XRD",bg="white",command=lambda:import_XRD(self)).pack(padx=5,pady=5,side=LEFT)
-    Button(self.Frame1_1,compound=CENTER, text="Home",bg="white",command=lambda:GUI_home(self)).pack(padx=5,pady=5,side=RIGHT)
+    Button(self.Frame1_1, compound=CENTER, text="Import XRD",bg="white",command=lambda:import_XRD(self)).pack(padx=5,pady=5,side=LEFT) #import images XRD
+    Button(self.Frame1_1,compound=CENTER, text="Home",bg="white",command=lambda:GUI_home(self)).pack(padx=5,pady=5,side=RIGHT) #return home
 
-    self.Button_next=Button(self.Frame1_1,compound=CENTER, text=u"\u27F6",bg="white")
+    self.Button_next=Button(self.Frame1_1,compound=CENTER, text=u"\u27F6",bg="white") #next Frame
     self.Button_next.pack(padx=5,pady=5,side=RIGHT)
     
     self.Button_prev=Button(self.Frame1_1,compound=CENTER, text=u"\u27F5",bg="white")
@@ -265,10 +265,10 @@ def GUI_2D_stress(self):
     self.Button3_.append(Button(self.Frame2,compound=CENTER, text="OTHER INFO",bg="white",command=lambda:pack_Frame_2D(self,8)))
     self.Button3_[8].pack(padx=5,pady=5,side=LEFT,fill=X,expand=YES)
 
-    import_XRD.graphic_frame3_2(import_XRD,self)
+    import_XRD.graphic_frame3_2(import_XRD,self) #create "CALIB XRD" graphic, residual_stress_2D/import_XRD_2D
     
-    calib_2D.graphic_Frame3_3(calib_2D,import_XRD,angles_modif,main_calcul,self)
-    calib_2D.graphic_Frame3_4(calib_2D,import_XRD,angles_modif,main_calcul,self)
-    angles_modif.__init__(angles_modif,self)
+    calib_2D.graphic_Frame3_3(calib_2D,import_XRD,angles_modif,main_calcul,self) #create "ANGLES MODIFICATION" graphic, residual_stress_2D/calib_XRD_2D
+    calib_2D.graphic_Frame3_4(calib_2D,import_XRD,angles_modif,main_calcul,self) #create "STRESS PARAMETERS" graphic, residual_stress_2D/calib_XRD_2D
+    angles_modif.__init__(angles_modif,self) #reset buttons in "ANGLES MODIFICATION" graphic, residual_stress_2D/angles_modification_2D
 
     self.root.mainloop()

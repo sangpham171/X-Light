@@ -28,8 +28,8 @@ def read_header_gfrm(f,import_XRD):
             import_XRD.chi.append(90-float(f_info[4]))  
           
         if "CENTER" in f_info[0]:
-            import_XRD.center_row.append(float(f_info[1]))
-            import_XRD.center_col.append(float(f_info[2]))
+            import_XRD.center_row.append(float(f_info[2]))
+            import_XRD.center_col.append(float(f_info[1]))
             
         if "NROWS" in f_info[0]:
             nrow=int(f_info[1])

@@ -38,6 +38,8 @@ class import_XRD:
         except Exception as e:
             showinfo(title="Warning",message=str(e)+"\n"+"\n"+str(traceback.format_exc()))
             return
+        else:
+            angles_modif.__init__(angles_modif,main)
         main.root.mainloop()
         
     def process(self,main):
@@ -45,17 +47,17 @@ class import_XRD:
         f = askopenfilenames(parent=main.root,title="Open file",filetypes=[('all supported format',format_),('all files','.*')])
         self.file_link = main.root.tk.splitlist(f)      #list of file link, 1 dimensional list
         if len(self.file_link)>0:
-            self.import_image_header(main)
+            self.import_image_header(main) #read image header
         
             if len(self.phi)>0:
                 self.progress["value"] = self.progress["value"]+1
                 self.progress.update()
-                self.destroy_widget(main)
-                self.graphic_frame3_1(main)
+                self.destroy_widget(main)  #reset all frame in list (see in fonction)
+                self.graphic_frame3_1(main) #graphical representation
 
                 self.progress["value"] = self.progress["value"]+1
                 self.progress.update()
-                self.attribute_graphic_frame3_2(main) 
+                self.attribute_graphic_frame3_2(main) #reset button in list (see in fonction)
         
         for widget in main.Frame1_2.winfo_children():
             widget.destroy()
@@ -95,11 +97,11 @@ class import_XRD:
                 self.progress.update()
                 self.i=i
                 
-                self.f=self.file_link[i]
+                self.f=self.file_link[i] #take file link
                 f_split=self.f.split("/")
-                self.filename.append(f_split[len(f_split)-1])
+                self.filename.append(f_split[len(f_split)-1]) #take filename
 
-                read_header_2D(i,self)
+                read_header_2D(i,self) #read image header with all the information above (phi, chi....), see \read_file\image_2D\read_image_2D
 
     def destroy_widget(self,main):
         for widget in main.Frame3_1_1.winfo_children():
@@ -306,13 +308,19 @@ class import_XRD:
         self.Entry_rot_2.grid(row=7, column=1,sticky=W)
         self.Entry_rot_3.grid(row=8, column=1,sticky=W)
         self.Entry_wl_calib.grid(row=9, column=1,sticky=W)
+
+        Label(main.Frame3_2_1_1, text="2\u03B8 direction in original images").grid(row=10,column=0,sticky=W)
+        self.direction_2theta=IntVar()
+        Radiobutton(main.Frame3_2_1_1, text="horizontal", variable=self.direction_2theta, value=1).grid(row=10,column=1,sticky=W)
+        Radiobutton(main.Frame3_2_1_1, text="vertical", variable=self.direction_2theta, value=2).grid(row=10,column=2,sticky=W)
+        self.direction_2theta.set(1)
         
-        Button(main.Frame3_2_1_1,compound=CENTER, text="PONI definition",bg="white",command=definition_poni).grid(row=10,column=0,sticky=W)
+        Button(main.Frame3_2_1_1,compound=CENTER, text="PONI definition",bg="white",command=definition_poni).grid(row=11,column=0,sticky=W)
         Button(main.Frame3_2_1_1,compound=CENTER, text="Import poni parameters",bg="white",command=lambda:import_poni_parameters(self,main)).grid(row=0,column=1,sticky=W)
         self.button_run_calib=Button(main.Frame3_2_1_1,compound=CENTER, text="RUN CALIBRATION",bg="white",command=lambda:None)
         self.button_run_calib.grid(row=0,column=2,sticky=W)     
-        Button(main.Frame3_2_1_1,compound=CENTER, text="Create PONI parameters",bg="white",command=lambda:pyFAI_calib()).grid(row=11,column=0,sticky=W)
-
+        Button(main.Frame3_2_1_1,compound=CENTER, text="Create PONI parameters",bg="white",command=lambda:pyFAI_calib()).grid(row=12,column=0,sticky=W)
+        
     def attribute_graphic_frame3_2(self,main):
         self.button_run_calib.config(command=lambda:calib_2D(self,main))
         calib_2D.button_apply.config(command=lambda:None)
@@ -327,4 +335,3 @@ class import_XRD:
         angles_modif.Button_import_gma.config(command=lambda:None)
         angles_modif.Button_next.config(command=lambda:None)
         angles_modif.Button_apply_gma.config(command=lambda:None)
-        

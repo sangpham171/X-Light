@@ -38,6 +38,8 @@ class import_XRD:
         except Exception as e:
             showinfo(title="Warning",message=str(e)+"\n"+"\n"+str(traceback.format_exc()))
             return
+        else:
+            angles_modif.def_button(angles_modif,self,main)
             
         main.root.mainloop()
 
@@ -219,13 +221,18 @@ class import_XRD:
         self.Entry_twotheta_offset.insert(0,"0")
         self.Entry_omega_offset.insert(0,"0")
                               
-        self.button_apply=Button(main.Frame3_2_2_1,compound=CENTER, text="Apply",bg="white",command=None)
+        self.button_apply=Button(main.Frame3_2_2_1,compound=CENTER, text="Apply",bg="white",command=lambda:None)
         self.button_apply.grid(row=5, column=0,sticky=W)
-        self.button_init=Button(main.Frame3_2_2_1,compound=CENTER, text="Initialize",bg="white",command=None)
+        self.button_init=Button(main.Frame3_2_2_1,compound=CENTER, text="Initialize",bg="white",command=lambda:None)
         self.button_init.grid(row=6,column=0,sticky=W)
-        self.button_advance=Button(main.Frame3_2_2_1,compound=CENTER, text="Advance",bg="white",command=None)
-        self.button_advance.grid(row=7,column=0,sticky=W)
+        self.button_advance=Button(main.Frame3_2_2_1,compound=CENTER, text="Advance",bg="white",command=lambda:None)
+        self.button_advance.grid(row=8,column=0,sticky=W)
 
+        self.button_import_gma=Button(main.Frame3_2_2_2,compound=CENTER, text="Import",bg="white",command=lambda:None)
+        self.button_next_gma=Button(main.Frame3_2_2_4,compound=CENTER, text="Next",bg="white",command=lambda:None)
+        self.button_apply_gma=Button(main.Frame3_2_2_6,compound=CENTER, text="apply",bg="white",command=lambda:None)
+    
+        self.gonio_config = IntVar()
 
     def attribute_graphic_frame3_2(self,main):
         scrollbar = Scrollbar(main.Frame3_2_1)
@@ -237,10 +244,18 @@ class import_XRD:
         scrollbar.config( command = mylist.yview )
 
         self.angles_modif_valid=False
-                              
+                             
         self.button_apply.config(command=lambda:angles_modif.apply(angles_modif,self,main))
         self.button_init.config(command=lambda:angles_modif.init(angles_modif,self,main))
         self.button_advance.config(command=lambda:angles_modif.advance(angles_modif,self,main))
+
+        self.button_import_gma.config(command=lambda:angles_modif.import_goniometric_angles(angles_modif,self,main))
+        self.button_next_gma.config(command=lambda:angles_modif.next_step(angles_modif,self,main))
+
+        if self.gonio_config.get()==1:
+            self.button_apply_gma.config(command=lambda:angles_modif.apply_advance_1(angles_modif,self,main))
+        elif self.gonio_config.get()==2:
+            self.button_apply_gma.config(command=lambda:angles_modif.apply_advance_2(angles_modif,self,main))
 
     def graphic_frame3_3(self,main):
         #background limit

@@ -59,6 +59,19 @@ def export_all_original_data(import_XRD,main):
             f.write("-------------\n")
         f.close()
     main.root.mainloop()
+
+def export_all_original_data_2(import_XRD,main):
+    location=askdirectory(title="Please choose a directory")
+    if location is not None and location is not '':
+        for i in range(len(import_XRD.phi)):               
+            name=str(location)+'/'+'scan_'+str(i+1)+'.txt'                 
+            f=open(name,'w')
+
+            for j in range(len(import_XRD.data_x[i])):
+                f.write(str("%0.9f" % import_XRD.data_x[i][j])+"\t")
+                f.write(str("%0.3f" % import_XRD.data_y[i][j])+"\n")
+            f.close()
+    main.root.mainloop()
     
 def export_fit_data(index,main_calcul,main):
     f=asksaveasfile(title="Export data",mode='w',defaultextension=".text",filetypes=[('text files','.txt'),('all files','.*')])
@@ -166,29 +179,20 @@ def export_all_stress_data(main_calcul,stress_calcul,main):
         progress["value"] = progress["value"]+1
         progress.update()
         f.write("FUNDAMENTAL METHOD \n")
-        if len(stress_calcul.liste_phi)==1 and stress_calcul.length_strain>=2:
-            f.write("---Uniaxial stress----- \n")
-            f.write('sigma = '+str('%0.1f' % stress_calcul.sigma_phi_uniaxial[0])+"+/-"+str('%0.1f' % stress_calcul.error_sigma_phi_uniaxial[0])+"MPa"+"\n")
-
-        if len(stress_calcul.liste_phi)==1 and stress_calcul.length_strain>=3:
-            f.write("---Uniaxial+Shear stress----- \n")
-            f.write('sigma = '+str('%0.1f' % stress_calcul.sigma_phi_uniaxial_shear[0])+"+/-"+str('%0.1f' % stress_calcul.error_sigma_phi_uniaxial_shear[0])+"MPa"+"\n")
-            f.write('shear = '+str('%0.1f' % stress_calcul.shear_phi_uniaxial_shear[0])+"+/-"+str('%0.1f' % stress_calcul.error_shear_phi_uniaxial_shear[0])+"MPa"+"\n")
-
-        if len(stress_calcul.liste_phi)>=2 and stress_calcul.length_strain==3:
+        if len(stress_calcul.liste_phi)>=1 and stress_calcul.length_strain==3:
             f.write("---Biaxial stress----- \n")
             f.write('sigma 11 = '+str(stress_calcul.tensor_biaxial[0][0])+"+/-"+str(stress_calcul.tensor_biaxial[1][0,0]**0.5)+"MPa"+"\n")
             f.write('sigma 22 = '+str(stress_calcul.tensor_biaxial[0][1])+"+/-"+str(stress_calcul.tensor_biaxial[1][1,1]**0.5)+"MPa"+"\n")     
             f.write("---------------------- \n")
 
-        if len(stress_calcul.liste_phi)>=2 and stress_calcul.length_strain>=4:
+        if len(stress_calcul.liste_phi)>=1 and stress_calcul.length_strain==4:
             f.write("---Biaxial stress----- \n")
             f.write('sigma 11 = '+str(stress_calcul.tensor_biaxial[0][0])+"+/-"+str(stress_calcul.tensor_biaxial[1][0,0]**0.5)+"MPa"+"\n")
             f.write('sigma 22 = '+str(stress_calcul.tensor_biaxial[0][2])+"+/-"+str(stress_calcul.tensor_biaxial[1][2,2]**0.5)+"MPa"+"\n")     
             f.write('sigma 12 = sigma 21 = '+str(stress_calcul.tensor_biaxial[0][1])+"+/-"+str(stress_calcul.tensor_biaxial[1][1,1]**0.5)+"MPa"+"\n")
             f.write("---------------------- \n")
 
-        if len(stress_calcul.liste_phi)>=2 and stress_calcul.length_strain==5:     
+        if len(stress_calcul.liste_phi)>=1 and stress_calcul.length_strain==5:     
             f.write("---Biaxial+shear stress----- \n")
             f.write('sigma 11 = '+str(stress_calcul.tensor_biaxial_shear[0][0])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][0,0]**0.5)+"MPa"+"\n")
             f.write('sigma 22 = '+str(stress_calcul.tensor_biaxial_shear[0][1])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][1,1]**0.5)+"MPa"+"\n")     
@@ -196,7 +200,7 @@ def export_all_stress_data(main_calcul,stress_calcul,main):
             f.write('sigma 23 = sigma 32 = '+str(stress_calcul.tensor_biaxial_shear[0][3])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][3,3]**0.5)+"MPa"+"\n")
             f.write("---------------------- \n")
 
-        if len(stress_calcul.liste_phi)>=2 and stress_calcul.length_strain>=6:  
+        if len(stress_calcul.liste_phi)>=1 and stress_calcul.length_strain>=6:  
             f.write("---Biaxial+shear stress----- \n")
             f.write('sigma 11 = '+str(stress_calcul.tensor_biaxial_shear[0][0])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][0,0]**0.5)+"MPa"+"\n")   
             f.write('sigma 22 = '+str(stress_calcul.tensor_biaxial_shear[0][2])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][2,2]**0.5)+"MPa"+"\n")
@@ -205,7 +209,7 @@ def export_all_stress_data(main_calcul,stress_calcul,main):
             f.write('sigma 23 = sigma 32 = '+str(stress_calcul.tensor_biaxial_shear[0][4])+"+/-"+str(stress_calcul.tensor_biaxial_shear[1][4,4]**0.5)+"MPa"+"\n")
             f.write("---------------------- \n")
 
-        if len(stress_calcul.liste_phi)>=3 and stress_calcul.length_strain>=6:
+        if len(stress_calcul.liste_phi)>=1 and stress_calcul.length_strain>=6:
             f.write("---Triaxial stress----- \n")
             f.write('sigma 11 = '+str(stress_calcul.tensor_triaxial[0][0])+"+/-"+str(stress_calcul.tensor_triaxial[1][0,0]**0.5)+"MPa"+"\n")
             f.write('sigma 22 = '+str(stress_calcul.tensor_triaxial[0][2])+"+/-"+str(stress_calcul.tensor_triaxial[1][2,2]**0.5)+"MPa"+"\n")     

@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 
-class angles_modif:
+class angles_modif:                                       
     def init(self,import_XRD,main):
         import_XRD.angles_modif_valid=False
 
@@ -127,123 +127,120 @@ class angles_modif:
             canvas.get_tk_widget().pack(fill=BOTH, expand=YES)
         
         main.root.mainloop()
-
+    
     def advance(self,import_XRD,main):
-        for widget in main.Frame3_2_2_2.winfo_children():
-            widget.destroy()
-        Frame_a=Frame(main.Frame3_2_2_2)
-        Frame_a.pack(side = TOP)
-        Frame_b=Frame(main.Frame3_2_2_2)
-        Frame_b.pack(side = TOP)
+        import_XRD.button_import_gma.grid(row=0,column=0,sticky=W)
         
         f=font.Font(size=9,underline=1)
-        Button(Frame_a,compound=CENTER, text="Import from file",bg="white",command=lambda:self.import_goniometric_angles(self,import_XRD,main)).grid(row=0,column=0,sticky=W)
-        Button(Frame_a,compound=CENTER, text="Hide",bg="white",command=lambda:self.hide(self,main)).grid(row=0,column=1,sticky=W)
+        #self.Button_import_gma=Button(main.Frame3_2_2_2,compound=CENTER, text="Import from file",bg="white",command=lambda:self.import_goniometric_angles(self,import_XRD,main))
+        #self.Button_import_gma.grid(row=0,column=0,sticky=W)
+##      Button(main.Frame3_2_2_2,compound=CENTER, text="Hide",bg="white",command=lambda:self.hide(self,main)).grid(row=0,column=1,sticky=W)
         
-        Label(Frame_a, text="GONIMETER CONFIGURATION",font=f).grid(row=1,column=0,sticky=W)
-        self.gonio_config = IntVar()
-        Radiobutton(Frame_a, text=u"CHI \u03C7", variable=self.gonio_config, value=1).grid(row=1,column=1,sticky=W)
-        Radiobutton(Frame_a, text=u"OMEGA \u03C9", variable=self.gonio_config, value=2).grid(row=2,column=1,sticky=W)
-        self.gonio_config.set(1)
+        Label(main.Frame3_2_2_3, text="GONIO CONFIG",font=f).grid(row=1,column=0,sticky=W)
+        #self.gonio_config = IntVar()
+        Radiobutton(main.Frame3_2_2_3, text=u"CHI \u03C7", variable=import_XRD.gonio_config, value=1).grid(row=1,column=1,sticky=W)
+        Radiobutton(main.Frame3_2_2_3, text=u"OMEGA \u03C9", variable=import_XRD.gonio_config, value=2).grid(row=2,column=1,sticky=W)
+        import_XRD.gonio_config.set(1)
 
-        Button(Frame_a,compound=CENTER, text="Next",bg="white",command=lambda:self.next_step(Frame_b,self,import_XRD,main)).grid(row=3,column=0,sticky=W)
+        import_XRD.button_next_gma.grid(row=0,column=0,sticky=W)
         main.root.mainloop()
 
-    def next_step(Frame_b,self,import_XRD,main):
-        for widget in Frame_b.winfo_children():
+    def next_step(self,import_XRD,main):
+        for widget in main.Frame3_2_2_5.winfo_children():
             widget.destroy()
             
         f=font.Font(size=9,underline=1)
-        if self.gonio_config.get()==1:
-            Label(Frame_b, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
+        if import_XRD.gonio_config.get()==1:
+            Label(main.Frame3_2_2_5, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
             self.scan_mode = IntVar()
-            Radiobutton(Frame_b, text=u"Chi \u03C7", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
-            Radiobutton(Frame_b, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
+            Radiobutton(main.Frame3_2_2_5, text=u"Chi \u03C7", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
+            Radiobutton(main.Frame3_2_2_5, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
             self.scan_mode.set(1)
 
-            Label(Frame_b, text="2\u03B8 start").grid(row=2,column=0,sticky=W)
-            self.Entry_2theta_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="2\u03B8 start").grid(row=2,column=0,sticky=W)
+            self.Entry_2theta_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_2theta_start.grid(row=2, column=1,sticky=W)
 
-            Label(Frame_b, text="2\u03B8 end").grid(row=2,column=2,sticky=W)
-            self.Entry_2theta_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="2\u03B8 end").grid(row=2,column=2,sticky=W)
+            self.Entry_2theta_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_2theta_end.grid(row=2, column=3,sticky=W)
 
-            Label(Frame_b, text="\u03C9").grid(row=3,column=0,sticky=W)
-            self.Entry_omega= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="\u03C9").grid(row=3,column=0,sticky=W)
+            self.Entry_omega= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_omega.grid(row=3, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
-            self.Entry_phi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
+            self.Entry_phi_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_start.grid(row=4, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
-            self.Entry_phi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
+            self.Entry_phi_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_end.grid(row=4, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
-            self.Entry_phi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
+            self.Entry_phi_number= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_number.grid(row=5, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C7 start").grid(row=6,column=0,sticky=W)
-            self.Entry_chi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C7 start").grid(row=6,column=0,sticky=W)
+            self.Entry_chi_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_chi_start.grid(row=6, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C7 end").grid(row=6,column=2,sticky=W)
-            self.Entry_chi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C7 end").grid(row=6,column=2,sticky=W)
+            self.Entry_chi_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_chi_end.grid(row=6, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C7").grid(row=7,column=0,sticky=W)
-            self.Entry_chi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"Number \u03C7").grid(row=7,column=0,sticky=W)
+            self.Entry_chi_number= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_chi_number.grid(row=7, column=1,sticky=W)
 
-            Button(Frame_b,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_1(self,import_XRD,main)).grid(row=8,column=1,sticky=W)
+            import_XRD.button_apply_gma.config(command=lambda:self.apply_advance_1(self,import_XRD,main))
+            import_XRD.button_apply_gma.grid(row=0,column=1,sticky=W)
 
-        elif self.gonio_config.get()==2:
-            Label(Frame_b, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
+        elif import_XRD.gonio_config.get()==2:
+            Label(main.Frame3_2_2_5, text="SCAN MODE",font=f).grid(row=0,column=0,sticky=W)
             self.scan_mode = IntVar()
-            Radiobutton(Frame_b, text=u"Omega \u03C9", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
-            Radiobutton(Frame_b, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
+            Radiobutton(main.Frame3_2_2_5, text=u"Omega \u03C9", variable=self.scan_mode, value=1).grid(row=0,column=1,sticky=W)
+            Radiobutton(main.Frame3_2_2_5, text=u"Phi \u03C6", variable=self.scan_mode, value=2).grid(row=1,column=1,sticky=W)
             self.scan_mode.set(1)
 
-            Label(Frame_b, text="2\u03B8 start").grid(row=2,column=0,sticky=W)
-            self.Entry_2theta_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="2\u03B8 start").grid(row=2,column=0,sticky=W)
+            self.Entry_2theta_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_2theta_start.grid(row=2, column=1,sticky=W)
 
-            Label(Frame_b, text="2\u03B8 end").grid(row=2,column=2,sticky=W)
-            self.Entry_2theta_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="2\u03B8 end").grid(row=2,column=2,sticky=W)
+            self.Entry_2theta_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_2theta_end.grid(row=2, column=3,sticky=W)
 
-            Label(Frame_b, text="\u03C7").grid(row=3,column=0,sticky=W)
-            self.Entry_chi= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text="\u03C7").grid(row=3,column=0,sticky=W)
+            self.Entry_chi= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_chi.grid(row=3, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
-            self.Entry_phi_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C6 start").grid(row=4,column=0,sticky=W)
+            self.Entry_phi_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_start.grid(row=4, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
-            self.Entry_phi_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C6 end").grid(row=4,column=2,sticky=W)
+            self.Entry_phi_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_end.grid(row=4, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
-            self.Entry_phi_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"Number \u03C6").grid(row=5,column=0,sticky=W)
+            self.Entry_phi_number= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_phi_number.grid(row=5, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C9 start").grid(row=6,column=0,sticky=W)
-            self.Entry_omega_start= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C9 start").grid(row=6,column=0,sticky=W)
+            self.Entry_omega_start= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_omega_start.grid(row=6, column=1,sticky=W)
 
-            Label(Frame_b, text=u"\u03C9 end").grid(row=6,column=2,sticky=W)
-            self.Entry_omega_end= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"\u03C9 end").grid(row=6,column=2,sticky=W)
+            self.Entry_omega_end= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_omega_end.grid(row=6, column=3,sticky=W)
 
-            Label(Frame_b, text=u"Number \u03C9").grid(row=7,column=0,sticky=W)
-            self.Entry_omega_number= Entry(Frame_b,width=10)
+            Label(main.Frame3_2_2_5, text=u"Number \u03C9").grid(row=7,column=0,sticky=W)
+            self.Entry_omega_number= Entry(main.Frame3_2_2_5,width=10)
             self.Entry_omega_number.grid(row=7, column=1,sticky=W)
             
-
-            Button(Frame_b,compound=CENTER, text="apply",bg="white",command=lambda:self.apply_advance_2(self,import_XRD,main)).grid(row=8,column=1,sticky=W)
+            import_XRD.button_apply_gma.config(command=lambda:self.apply_advance_2(self,import_XRD,main))
+            import_XRD.button_apply_gma.grid(row=0,column=1,sticky=W)
         
         main.root.mainloop()
             
@@ -266,8 +263,17 @@ class angles_modif:
         except ValueError:
             showinfo(title="Error",message="Please verify all values are numbers\nPlease use '.' instead of ',' to insert a number")
         else:
-            phi_step=(phi_end-phi_start)/(phi_number-1)
-            chi_step=(chi_end-chi_start)/(chi_number-1)
+            import_XRD.angles_modif_valid=True
+            
+            if (phi_number-1)>=1:
+                phi_step=(phi_end-phi_start)/(phi_number-1)
+            else:
+                phi_step=0
+            if (chi_number-1)>=1:
+                chi_step=(chi_end-chi_start)/(chi_number-1)
+            else:
+                chi_step=0
+                
             twotheta_step=(twotheta_end-twotheta_start)/len(import_XRD.data_x[0])
 
             self.twotheta=[twotheta_start]*len(import_XRD.phi)
@@ -351,8 +357,17 @@ class angles_modif:
         except ValueError:
             showinfo(title="Error",message="Please verify all values are numbers\nPlease use '.' instead of ',' to insert a number")
         else:
-            phi_step=(phi_end-phi_start)/(phi_number-1)
-            omega_step=(omega_end-omega_start)/(omega_number-1)
+            import_XRD.angles_modif_valid=True
+            if (phi_number-1)>=1:
+                phi_step=(phi_end-phi_start)/(phi_number-1)
+            else:
+                phi_step=0
+                
+            if (omega_number-1)>=1:
+                omega_step=(omega_end-omega_start)/(omega_number-1)
+            else:
+                omega_step=0
+
             twotheta_step=(twotheta_end-twotheta_start)/len(import_XRD.data_x[0])
 
             self.twotheta=[twotheta_start]*len(import_XRD.phi)
@@ -425,73 +440,78 @@ class angles_modif:
     def import_goniometric_angles(self,import_XRD,main):
         f = askopenfilename(parent=main.root,title="Open file",filetypes=[('file type','*.gma;*.GMA'),('all files','.*')])
         if f is not None and f is not '':
-            f_open=open(f,"r")
-            line_text=f_open.readline() #Phi Chi Omega 2theta
-            
-            self.phi=[]
-            self.chi=[]
-            self.twotheta=[]
-            self.omega=[]
-            line_text=f_open.readline()
-            while line_text is not None and line_text is not '' and len(self.phi)<len(import_XRD.phi):
-                angles=line_text.split()
-                try:
-                    self.phi.append(float(angles[1]))
-                    self.chi.append(float(angles[2]))
-                    self.omega.append(float(angles[3]))
-                    self.twotheta.append(float(angles[4]))
-                except Exception:
-                    showinfo(title="Warning",message="Invalid format")
-                    return
-                    
+            try:
+                f_open=open(f,"r")
+                line_text=f_open.readline() #Phi Chi Omega 2theta
+                
+                self.phi=[]
+                self.chi=[]
+                self.twotheta=[]
+                self.omega=[]
                 line_text=f_open.readline()
+                while line_text is not None and line_text is not '' and len(self.phi)<len(import_XRD.phi):
+                    angles=line_text.split()
+                    try:
+                        self.phi.append(float(angles[1]))
+                        self.chi.append(float(angles[2]))
+                        self.omega.append(float(angles[3]))
+                        self.twotheta.append(float(angles[4]))
+                    except Exception:
+                        showinfo(title="Warning",message="Invalid format")
+                        return
+                        
+                    line_text=f_open.readline()
 
-            if len(self.phi)<len(import_XRD.phi):
-                for i in range(len(import_XRD.phi)-len(self.phi)):
-                    self.phi.append(float('NaN'))
-                    self.chi.append(float('NaN'))
-                    self.omega.append(float('NaN'))
-                    self.twotheta.append(float('NaN'))
+                if len(self.phi)<len(import_XRD.phi):
+                    for i in range(len(import_XRD.phi)-len(self.phi)):
+                        self.phi.append(float('NaN'))
+                        self.chi.append(float('NaN'))
+                        self.omega.append(float('NaN'))
+                        self.twotheta.append(float('NaN'))
 
-            twotheta_shift=self.twotheta[0]-import_XRD.twotheta[0]
-            data_x=[]
-            for i in range(len(import_XRD.data_x[0])):
-                data_x.append(import_XRD.data_x[0][i]+twotheta_shift)
+                twotheta_shift=self.twotheta[0]-import_XRD.twotheta[0]
+                data_x=[]
+                for i in range(len(import_XRD.data_x[0])):
+                    data_x.append(import_XRD.data_x[0][i]+twotheta_shift)
 
-            self.data_x=[]
-            for i in range(len(import_XRD.data_x)):
-                self.data_x.append(data_x)
+                self.data_x=[]
+                for i in range(len(import_XRD.data_x)):
+                    self.data_x.append(data_x)
 
-            for widget in main.Frame3_2_1.winfo_children():
-                widget.destroy()
+                for widget in main.Frame3_2_1.winfo_children():
+                    widget.destroy()
 
-            scrollbar = Scrollbar(main.Frame3_2_1)
-            scrollbar.pack( side = RIGHT, fill=Y) 
-            mylist = Listbox(main.Frame3_2_1, yscrollcommand = scrollbar.set,width=50)
-            for i in range(len(self.phi)):
-                mylist.insert(END, str(i+1)+u".\u03C6="+str(float(self.phi[i]))+u"; \u03C7="+str(float(self.chi[i]))+u"; \u03C9="+str(float(self.omega[i])))
+                scrollbar = Scrollbar(main.Frame3_2_1)
+                scrollbar.pack( side = RIGHT, fill=Y) 
+                mylist = Listbox(main.Frame3_2_1, yscrollcommand = scrollbar.set,width=50)
+                for i in range(len(self.phi)):
+                    mylist.insert(END, str(i+1)+u".\u03C6="+str(float(self.phi[i]))+u"; \u03C7="+str(float(self.chi[i]))+u"; \u03C9="+str(float(self.omega[i])))
 
-            mylist.pack( side = LEFT, fill = BOTH )
-            scrollbar.config( command = mylist.yview )
+                mylist.pack( side = LEFT, fill = BOTH )
+                scrollbar.config( command = mylist.yview )
 
-            for widget in main.Frame3_2_3.winfo_children():
-                widget.destroy()
-            f=plt.figure(1,facecolor="0.94")
-            for i in range(len(self.phi)):
-                plt.plot(self.data_x[i],import_XRD.data_y[i],label=str(i+1))
-            plt.xlabel(r"$2\theta$")
-            plt.ylabel("Intensity")
-            plt.title("All original graph")
-            plt.legend(loc='upper left' , bbox_to_anchor=(-0.1, -0.2, 1.2, 0), ncol=10,mode="expand",borderaxespad=0.,fontsize='x-small')
-            plt.subplots_adjust(bottom=0.4)
-            plt.close()
-            canvas = FigureCanvasTkAgg(f, main.Frame3_2_3)
-            canvas.get_tk_widget().pack(fill=BOTH, expand=YES)
+                for widget in main.Frame3_2_3.winfo_children():
+                    widget.destroy()
+                f=plt.figure(1,facecolor="0.94")
+                for i in range(len(self.phi)):
+                    plt.plot(self.data_x[i],import_XRD.data_y[i],label=str(i+1))
+                plt.xlabel(r"$2\theta$")
+                plt.ylabel("Intensity")
+                plt.title("All original graph")
+                plt.legend(loc='upper left' , bbox_to_anchor=(-0.1, -0.2, 1.2, 0), ncol=10,mode="expand",borderaxespad=0.,fontsize='x-small')
+                plt.subplots_adjust(bottom=0.4)
+                plt.close()
+                canvas = FigureCanvasTkAgg(f, main.Frame3_2_3)
+                canvas.get_tk_widget().pack(fill=BOTH, expand=YES)
 
-            for widget in main.Frame3_3_4.winfo_children():
-                widget.destroy()
-            canvas = FigureCanvasTkAgg(f, main.Frame3_3_4)
-            canvas.get_tk_widget().pack(fill=BOTH, expand=YES)
+                for widget in main.Frame3_3_4.winfo_children():
+                    widget.destroy()
+                canvas = FigureCanvasTkAgg(f, main.Frame3_3_4)
+                canvas.get_tk_widget().pack(fill=BOTH, expand=YES)
+            except Exception as e:
+                showinfo(title="Error",message="Uncorrected file format")
+            else:
+                import_XRD.angles_modif_valid=True
 
         main.root.mainloop()
                 

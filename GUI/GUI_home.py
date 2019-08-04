@@ -16,7 +16,7 @@ from GUI.GUI_1D_stress import GUI_1D_stress
 from GUI.GUI_2D_stress import GUI_2D_stress
 from GUI.GUI_XEC import GUI_XEC
 import pyFAI
-from pyFAI.app.calib2 import main as pyFAI_calib
+from pyFAI.app.calib2 import main as run_pyFAI_calib
 screen_width=1920
 screen_height=1080
 ###########################################################################################################################################
@@ -25,7 +25,7 @@ def GUI_home(self):
     for widget in self.root.winfo_children():
         widget.destroy()
             
-    menubar = Menu(self.root)
+    menubar = Menu(self.root) # menu interface
     menu1 = Menu(menubar, tearoff=0)
     menu1.add_separator()
     menu1.add_command(label="Exit", command=lambda:root_exit(self))
@@ -45,10 +45,11 @@ def GUI_home(self):
 
     Label(Frame0, text='PLEASE CHOOSE AN ANALYSIS!',bg="white").pack()
 
-    Button(Frame1,text = '1D XRD STRESS',bg="white", command = lambda:GUI_1D_stress(self)).grid(column=0,row=0,ipadx=20,ipady=20,padx=20,pady=20)    
-    Button(Frame1,text = '2D XRD STRESS',bg="white", command = lambda:GUI_2D_stress(self)).grid(column=0,row=1,ipadx=20,ipady=20,padx=20,pady=20)
-    Button(Frame1,text = '2D pyFAI-calib',bg="white", command = lambda:pyFAI_calib()).grid(column=0,row=2,ipadx=20,ipady=20,padx=20,pady=20)
-    Button(Frame1,text = 'XEC ANALYSIS',bg="white", command = lambda:GUI_XEC(self)).grid(column=0,row=3,ipadx=20,ipady=20,padx=20,pady=20)
+    #Buttons fonction
+    Button(Frame1,text = '1D XRD STRESS',bg="white", command = lambda:GUI_1D_stress(self)).grid(column=0,row=0,ipadx=20,ipady=20,padx=20,pady=20)   #create 1D stress interface
+    Button(Frame1,text = '2D XRD STRESS',bg="white", command = lambda:GUI_2D_stress(self)).grid(column=0,row=1,ipadx=20,ipady=20,padx=20,pady=20)   #create 1D stress interface
+    Button(Frame1,text = '2D pyFAI-calib',bg="white", command = lambda:pyFAI_calib()).grid(column=0,row=2,ipadx=20,ipady=20,padx=20,pady=20)        #open pyFAI calib
+    Button(Frame1,text = 'XEC ANALYSIS',bg="white", command = lambda:GUI_XEC(self)).grid(column=0,row=3,ipadx=20,ipady=20,padx=20,pady=20)          #create X-ray Elastic Constant interface
 #-----------------------------------------------------------------------------------------------------------------------
 def about(self):
     showinfo(title="About",message="X-Light-v1.1\nXRD Residual Stress Analysis\nCopy right: PHAM Tu Quoc Sang\n(sang.phamtuquoc@gmail.com)")
@@ -57,3 +58,7 @@ def about(self):
 def root_exit(self):
     self.root.quit()
     self.root.destroy()
+#-----------------------------------------------------------------------------------------------------------------------
+def pyFAI_calib():
+    result = run_pyFAI_calib()
+    sys.exit(result)

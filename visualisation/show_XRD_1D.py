@@ -20,7 +20,7 @@ import numpy as np
 import math as math
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tools.export_graph_1D import export_original_graph, export_all_original_graph, export_fit_graph, export_all_fit_graph, export_stress_graph, export_all_stress_graph
-from tools.export_data_1D import export_original_data, export_all_original_data,export_fit_data, export_all_fit_data, export_all_stress_data, export_strain_sin2psi_data
+from tools.export_data_1D import export_original_data, export_all_original_data,export_all_original_data_2,export_fit_data, export_all_fit_data, export_all_stress_data, export_strain_sin2psi_data
 from tools.peak_shift_correction import fit_peak_shift_correction
 #-------------------------------------------------------------------------------------
 def show_original_graph(event,import_XRD,main):
@@ -117,7 +117,7 @@ def show_original_graph(event,import_XRD,main):
         Button(Frame_a, text = 'Export as image',bg="white", command = lambda: export_original_graph(index,import_XRD,main)).grid(row=0,column=0,sticky=W) 
         Button(Frame_a, text = 'Export all as image',bg="white", command = lambda: export_all_original_graph(import_XRD,main)).grid(row=1,column=0,sticky=W)
         Button(Frame_a, text = 'Export as text',bg="white", command = lambda: export_original_data(index,import_XRD,main)).grid(row=2,column=0,sticky=W) 
-        Button(Frame_a, text = 'Export all as text',bg="white", command = lambda: export_all_original_data(import_XRD,main)).grid(row=3,column=0,sticky=W)
+        Button(Frame_a, text = 'Export all as text',bg="white", command = lambda: export_all_original_data_2(import_XRD,main)).grid(row=3,column=0,sticky=W)
 
 
         scrollbar = Scrollbar(Frame_b)

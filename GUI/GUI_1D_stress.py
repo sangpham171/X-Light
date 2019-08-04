@@ -98,7 +98,14 @@ def GUI_1D_stress(self):
     self.Frame3_2_2_1.pack(side=TOP)
     self.Frame3_2_2_2= Frame(self.Frame3_2_2)
     self.Frame3_2_2_2.pack(side=TOP)
-    
+    self.Frame3_2_2_3= Frame(self.Frame3_2_2)
+    self.Frame3_2_2_3.pack(side=TOP)
+    self.Frame3_2_2_4= Frame(self.Frame3_2_2)
+    self.Frame3_2_2_4.pack(side=TOP)
+    self.Frame3_2_2_5= Frame(self.Frame3_2_2)
+    self.Frame3_2_2_5.pack(side=TOP)
+    self.Frame3_2_2_6= Frame(self.Frame3_2_2)
+    self.Frame3_2_2_6.pack(side=TOP) 
     
     self.Frame3_.append(Frame(self.Frame3,width=screen_width,height=screen_height))
     self.Frame3_[3].pack_propagate(1)

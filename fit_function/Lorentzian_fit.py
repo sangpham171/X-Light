@@ -12,6 +12,8 @@
 #
 from scipy.optimize import curve_fit
 import numpy as np
+import warnings
+from scipy.optimize import OptimizeWarning
 
 def Lorentzian_fit(intensity,two_theta,kalpha_1,kalpha_2,kalpha_ratio,p_0,peak_shape):
     if kalpha_2==0:
