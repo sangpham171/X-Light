@@ -27,7 +27,7 @@ class main:
             self.root.wm_state('zoomed')
         except Exception:
             pass
-        self.root.title('X-Light 1.1')
+        self.root.title('X-Light 1.2')
 
         if getattr(sys, 'frozen', False):
             path = sys._MEIPASS
@@ -43,7 +43,7 @@ class main:
         #self.root.tk.call('wm', 'iconphoto', self.root._w, img)
         #self.root.iconbitmap(default=os.path.join(path, filename))
 
-        GUI_home(self)
+        GUI_home(self)  #create home interface GUI/GUI_home
         self.root.mainloop()
     #-----------------------------------------------------------------------------------------------------------------------
 
