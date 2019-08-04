@@ -38,8 +38,8 @@ class import_XRD:
         except Exception as e:
             showinfo(title="Warning",message=str(e)+"\n"+"\n"+str(traceback.format_exc()))
             return
-        else:
-            angles_modif.__init__(angles_modif,main)
+        #else:
+            #angles_modif.__init__(angles_modif,main)
         main.root.mainloop()
         
     def process(self,main):

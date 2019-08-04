@@ -52,24 +52,24 @@ def calib_pyFai(self,intensity_2D,nrow,ncol,center_row,center_col,twotheta_cente
         if theta_direction==1:
             intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , ncol, nrow, unit="2th_deg") #pyFAI calib
             
-            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_row)] #gamma direction
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(nrow/2)] #gamma direction
             if gamma_y[0]>gamma_y[len(gamma_y)-1]:
                 gamma_y=np.flip(gamma_y,axis=0)
-            if np.isnan(twotheta_center)==False:
-                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_col)] #2theta direction
-            else:
-                twotheta_x=np.asarray(twotheta_x)
+            #if np.isnan(twotheta_center)==False:
+               #twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_col)] #2theta direction
+            #else:
+            twotheta_x=np.asarray(twotheta_x)
 
         else:
             intensity_2D_calib, twotheta_x, gamma_y = calib.integrate2d( np.asarray(intensity_2D) , nrow, ncol, unit="2th_deg") #pyFAI calib
             
-            gamma_y=np.asarray(gamma_y)-gamma_y[int(center_col)] #gamma direction
+            gamma_y=np.asarray(gamma_y)-gamma_y[int(ncol/2)] #gamma direction
             if gamma_y[0]>gamma_y[len(gamma_y)-1]:
                 gamma_y=np.flip(gamma_y,axis=0)
-            if np.isnan(twotheta_center)==False:
-                twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)] #2theta direction
-            else:
-                twotheta_x=np.asarray(twotheta_x)
+            #if np.isnan(twotheta_center)==False:
+                #twotheta_x=np.asarray(twotheta_x)+twotheta_center-twotheta_x[int(center_row)] #2theta direction
+            #else:
+            twotheta_x=np.asarray(twotheta_x)
 
             
         return(intensity_2D_calib,twotheta_x,gamma_y)
