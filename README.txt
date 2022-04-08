@@ -4,7 +4,7 @@
 #
 #    Copyright (C) PHAM Tu Quoc Sang, Institut Jean Lamour, Nancy, France
 #
-#    Principal author:       PHAM Tu Quoc Sang (sang.phamtuquoc@gmail.com  ; tu-quoc-sang.pham@univ-lorraine.fr)
+#    Principal author:       PHAM Tu Quoc Sang (sang.phamtuquoc@gmail.com)
 #
 #----PERMISSION NOTICE--------------------------------------------------------
 #    This software is published under the terms of the GNU GPL-3.0-or-later (https://www.gnu.org/licenses/gpl.txt).
