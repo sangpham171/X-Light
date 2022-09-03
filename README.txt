@@ -13,6 +13,16 @@
 #
 
 ###############################
+
+X-Light is an open-source software that is written in Python with a graphical
+user interface. X-Light was developed to determine residual stress by X-ray
+diffraction. This software can process the 0D, 1D and 2D diffraction data
+obtained with laboratory diffractometers or synchrotron radiation. X-Light
+provides several options for stress analysis and five functions to fit a peak: Gauss,
+Lorentz, Pearson VII, pseudo-Voigt and Voigt. The residual stress is determined
+by the conventional sin2ψ method and the fundamental method.
+
+###############################
 How to open the program?
 ######
 - open __main__.py on IDLE python
